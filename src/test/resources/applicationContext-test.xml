@@ -5,11 +5,17 @@
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
   <bean id="closureTemplateConfigurer" class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateConfigurer">
-  	<property name="templatesLocation" value="classpath:test-closure-templates"/>
+  	<property name="templatesLocation" value="file:src/test/resources/test-closure-templates"/>
   </bean>
   
   <bean id="closureTemplateViewResolver" class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateViewResolver">
   	<property name="closureTemplateConfig" ref="closureTemplateConfigurer"/>
+  	<property name="cache" value="true"/>
+  </bean>
+  
+  <bean id="noCacheClosureTemplateViewResolver" class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateViewResolver">
+  	<property name="closureTemplateConfig" ref="closureTemplateConfigurer"/>
+  	<property name="cache" value="false"/>
   </bean>
   
 </beans>

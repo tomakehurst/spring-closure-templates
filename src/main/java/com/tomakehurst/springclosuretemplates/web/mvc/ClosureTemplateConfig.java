@@ -1,8 +1,9 @@
 package com.tomakehurst.springclosuretemplates.web.mvc;
 
-import com.google.template.soy.SoyFileSet;
+import org.springframework.core.io.Resource;
+
 
 public interface ClosureTemplateConfig {
 
-	SoyFileSet getAllTemplatesFileSet();
+	Resource getTemplatesLocation();
 }
