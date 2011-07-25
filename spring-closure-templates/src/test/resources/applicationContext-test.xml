@@ -9,12 +9,10 @@
   </bean>
   
   <bean id="closureTemplateViewResolver" class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateViewResolver">
-  	<property name="closureTemplateConfig" ref="closureTemplateConfigurer"/>
   	<property name="cache" value="true"/>
   </bean>
   
   <bean id="noCacheClosureTemplateViewResolver" class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateViewResolver">
-  	<property name="closureTemplateConfig" ref="closureTemplateConfigurer"/>
   	<property name="cache" value="false"/>
   </bean>
   

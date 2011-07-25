@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.view.AbstractTemplateViewResolver;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
@@ -13,7 +14,9 @@ import com.google.template.soy.tofu.SoyTofu;
 
 public class ClosureTemplateViewResolver extends AbstractTemplateViewResolver {
 
+	@Autowired
 	private ClosureTemplateConfig closureTemplateConfig;
+	
 	private SoyTofu compiledTemplates;
 	
 	public ClosureTemplateViewResolver() {
