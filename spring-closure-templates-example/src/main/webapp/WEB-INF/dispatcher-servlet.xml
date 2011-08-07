@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<mvc:annotation-driven />
+	<context:component-scan base-package="com.tomakehurst.springclosure.example" />
+
+	<bean id="closureTemplateConfigurer"
+		class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateConfigurer">
+		<property name="templatesLocation" value="/WEB-INF/templates" />
+	</bean>
+
+	<bean id="closureTemplateViewResolver"
+		class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateViewResolver">
+		<property name="cache" value="false" />
+	</bean>
+	
+	<bean id="closureTemplateJSController" class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateJavascriptController">
+		<property name="cacheControl" value="no-cache" />
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html" />
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+		<property name="viewResolvers">
+			<list>
+				<ref local="closureTemplateViewResolver"/>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+			</list>
+		</property>
+	</bean>
+
+
+</beans>
