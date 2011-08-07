@@ -26,10 +26,44 @@ public class ClosureTemplateJavascriptController {
 	private ClosureTemplateConfig config;
 	
 	private String cacheControl = "public, max-age=3600";
+	
+	//TODO: Expose this via setter so options can be injected
+	private SoyJsSrcOptions jsSrcOptions = new SoyJsSrcOptions();
 
 	@RequestMapping(value="/tmpl/{templateFileName}.js", method=GET)
 	public ResponseEntity<String> compileJsForTemplateFile(@PathVariable String templateFileName) {
+		File templateFile = getTemplateFileAndAssertExistence(templateFileName);
+		String templateContent = compileTemplateAndAssertSuccess(templateFile);
+		ResponseEntity<String> response = prepareResponseFor(templateContent);
+		return response;
+	}
+
+	private ResponseEntity<String> prepareResponseFor(String templateContent) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "text/javascript");
+		headers.add("Cache-Control", cacheControl);
+		ResponseEntity<String> response = new ResponseEntity<String>(templateContent, headers, OK);
+		return response;
+	}
+
+	private String compileTemplateAndAssertSuccess(File templateFile) {
+		SoyFileSet soyFileSet = buildSoyFileSetFrom(templateFile);
 		
+		List<String> compiledTemplates = soyFileSet.compileToJsSrc(jsSrcOptions, null);
+		if (compiledTemplates.size() < 1) {
+			throw notFound();
+		}
+		
+		String templateContent = compiledTemplates.get(0);
+		return templateContent;
+	}
+
+	private SoyFileSet buildSoyFileSetFrom(File templateFile) {
+		SoyFileSet soyFileSet = (new SoyFileSet.Builder()).add(templateFile).build();
+		return soyFileSet;
+	}
+
+	private File getTemplateFileAndAssertExistence(String templateFileName) {
 		File templateFile;
 		try {
 			templateFile = new File(config.getTemplatesLocation().getFile(), templateFileName + ".soy");
@@ -40,20 +74,7 @@ public class ClosureTemplateJavascriptController {
 		if (!templateFile.exists() || !templateFile.isFile()) {
 			throw notFound();
 		}
-		
-		SoyFileSet soyFileSet = (new SoyFileSet.Builder()).add(templateFile).build();
-		SoyJsSrcOptions jsSrcOptions = new SoyJsSrcOptions();
-		
-		List<String> compiledTemplates = soyFileSet.compileToJsSrc(jsSrcOptions, null);
-		if (compiledTemplates.size() < 1) {
-			throw notFound();
-		}
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", "text/javascript");
-		headers.add("Cache-Control", cacheControl);
-		ResponseEntity<String> response = new ResponseEntity<String>(compiledTemplates.get(0), headers, OK);
-		return response;
+		return templateFile;
 	}
 
 	private HttpClientErrorException notFound() {
