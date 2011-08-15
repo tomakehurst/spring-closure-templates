@@ -27,7 +27,6 @@ public class ClosureTemplateJavascriptController {
 	
 	private String cacheControl = "public, max-age=3600";
 	
-	//TODO: Expose this via setter so options can be injected
 	private SoyJsSrcOptions jsSrcOptions = new SoyJsSrcOptions();
 
 	@RequestMapping(value="/tmpl/{templateFileName}.js", method=GET)
@@ -87,5 +86,9 @@ public class ClosureTemplateJavascriptController {
 
 	public void setCacheControl(String cacheControl) {
 		this.cacheControl = cacheControl;
+	}
+
+	public void setJsSrcOptions(SoyJsSrcOptions jsSrcOptions) {
+		this.jsSrcOptions = jsSrcOptions;
 	}
 }

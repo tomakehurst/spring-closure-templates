@@ -1,0 +1,13 @@
+{namespace com.tomakehurst}
+
+/**
+ * Word list
+ * @param words The words to display
+ */
+{template .clientWords}
+	<ul>
+		{foreach $word in $words}
+			<li>{$word}</li>
+		{/foreach}
+	</ul>
+{/template}
