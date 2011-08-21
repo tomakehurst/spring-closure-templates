@@ -2,10 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.tomakehurst</groupId>
+	<parent>
+		<groupId>com.tomakehurst</groupId>
+		<artifactId>spring-closure-templates-parent</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+
 	<artifactId>spring-closure-templates</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1-SNAPSHOT</version>
 	<name>spring-closure-templates</name>
 
 	<url>https://github.com/tomakehurst/spring-closure-templates</url>

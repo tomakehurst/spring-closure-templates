@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.tomakehurst</groupId>
+	<artifactId>spring-closure-templates-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>0.1-SNAPSHOT</version>
+	<name>spring-closure-templates-parent</name>
+
+	<scm>
+		<connection>scm:git:https://tomakehurst@github.com/tomakehurst/spring-closure-templates.git</connection>
+		<developerConnection>scm:git:https://tomakehurst@github.com/tomakehurst/spring-closure-templates.git</developerConnection>
+	</scm>
+
+	<modules>
+		<module>spring-closure-templates</module>
+		<module>spring-closure-templates-example</module>
+	</modules>
+</project>
