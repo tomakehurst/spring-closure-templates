@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.tomakehurst</groupId>
 		<artifactId>spring-closure-templates-parent</artifactId>
-		<version>0.2-SNAPSHOT</version>
+		<version>0.3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>spring-closure-templates</artifactId>
@@ -12,21 +12,6 @@
 	<name>spring-closure-templates</name>
 
 	<url>https://github.com/tomakehurst/spring-closure-templates</url>
-
-	<repositories>
-		<repository>
-			<id>tomakehurst-mvn-repo-thirdparty</id>
-			<name>Tom Akehurst's 3rd party Maven Repo</name>
-			<url>https://github.com/tomakehurst/tomakehurst-mvn-repo/raw/master/thirdparty</url>
-			<layout>default</layout>
-		</repository>
-		<repository>
-			<id>google-releases</id>
-			<name>Google Releases</name>
-			<url>https://oss.sonatype.org/content/groups/google/</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
 
 	<dependencies>
 		<dependency>
