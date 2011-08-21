@@ -4,7 +4,7 @@
 	<groupId>com.tomakehurst</groupId>
 	<artifactId>spring-closure-templates-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.1</version>
+	<version>0.2-SNAPSHOT</version>
 	<name>spring-closure-templates-parent</name>
 
 	<scm>
