@@ -12,10 +12,10 @@
 	<bean id="closureTemplateConfigurer"
 		class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateConfigurer">
 		<property name="templatesLocation" value="/WEB-INF/templates" />
+		<property name="devMode" value="true"/>
 	</bean>
 	
 	<bean id="closureTemplateJSController" class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateJavascriptController">
-		<property name="cacheControl" value="no-cache" />
 	</bean>
 
 	<bean id="closureTemplateViewResolver"
