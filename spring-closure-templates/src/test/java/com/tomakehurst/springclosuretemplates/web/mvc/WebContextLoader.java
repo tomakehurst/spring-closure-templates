@@ -5,7 +5,6 @@ import static org.springframework.web.context.WebApplicationContext.ROOT_WEB_APP
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigUtils;
-import org.springframework.mock.web.MockServletConfig;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.ContextLoader;
 import org.springframework.web.context.support.GenericWebApplicationContext;
@@ -20,7 +19,6 @@ public class WebContextLoader implements ContextLoader {
 	@Override
 	public ApplicationContext loadContext(String... locations) throws Exception {
 		MockServletContext servletContext = new MockServletContext();
-		MockServletConfig servletConfig = new MockServletConfig();
 		
 		GenericWebApplicationContext context = new GenericWebApplicationContext();
 		context.setServletContext(servletContext);

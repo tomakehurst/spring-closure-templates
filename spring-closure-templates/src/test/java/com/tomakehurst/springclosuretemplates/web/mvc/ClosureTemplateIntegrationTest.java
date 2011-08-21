@@ -2,6 +2,7 @@ package com.tomakehurst.springclosuretemplates.web.mvc;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 import java.io.File;
@@ -30,6 +31,12 @@ public class ClosureTemplateIntegrationTest {
 
 	private static final String TEMPLATES_DIR = "src/test/resources/test-closure-templates";
 
+	@Autowired
+	private ClosureTemplateConfigurer config;
+	
+	@Autowired
+	private ClosureTemplateJavascriptController jsController;
+	
 	@Autowired
 	@Qualifier("closureTemplateViewResolver")
 	private ClosureTemplateViewResolver cachingClosureTemplateViewResolver;
@@ -90,13 +97,41 @@ public class ClosureTemplateIntegrationTest {
 	}
 	
 	@Test(expected=SoyTofuException.class)
-	public void shouldNotLoadNewTemplatesIfCaching() throws Exception {
+	public void shouldThrowExceptionIfNewTemplateLoadAttemptedWhenCaching() throws Exception {
 		String initialTemplate = getTemplateContent("example-one.soy").replace("helloName", "myNameIs");
 		writeNewTemplateFile("tmp-example-2.soy", initialTemplate);
 		
 		View view = cachingClosureTemplateViewResolver.resolveViewName("com.tomakehurst.myNameIs", Locale.UK);
 		model.put("name", "Jimmy");
 		render(view);
+	}
+	
+	@Test
+	public void shouldNotRecompileJsOnEachInvocationIfNotInDevMode() throws Exception {
+		config.setDevMode(false);
+		String initialTemplate = getTemplateContent("example-one.soy").replace("helloName", "myNameIs");
+		writeNewTemplateFile("tmp-js-example.soy", initialTemplate);
+		String initialJs = jsController.getJsForTemplateFile("tmp-js-example").getBody();
+		
+		String newTemplate = initialTemplate.replace("Hello {$name}", "My name is {$name}");
+		writeNewTemplateFile("tmp-js-example.soy", newTemplate);
+		String finalJs = jsController.getJsForTemplateFile("tmp-js-example").getBody();
+		
+		assertThat(initialJs, is(finalJs));
+	}
+	
+	@Test
+	public void shouldRecompileJsOnEachInvocationIfInDevMode() throws Exception {
+		config.setDevMode(true);
+		String initialTemplate = getTemplateContent("example-one.soy").replace("helloName", "myNameIs");
+		writeNewTemplateFile("tmp-js-example.soy", initialTemplate);
+		String initialJs = jsController.getJsForTemplateFile("tmp-js-example").getBody();
+		
+		String newTemplate = initialTemplate.replace("Hello {$name}", "My name is {$name}");
+		writeNewTemplateFile("tmp-js-example.soy", newTemplate);
+		String finalJs = jsController.getJsForTemplateFile("tmp-js-example").getBody();
+		
+		assertThat(initialJs, not(finalJs));
 	}
 	
 	private String render(View view) throws Exception {

@@ -6,4 +6,5 @@ import org.springframework.core.io.Resource;
 public interface ClosureTemplateConfig {
 
 	Resource getTemplatesLocation();
+	boolean isDevMode();
 }
