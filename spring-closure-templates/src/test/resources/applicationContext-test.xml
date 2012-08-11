@@ -7,7 +7,7 @@
 	<bean id="closureTemplateConfigurer"
 		class="com.tomakehurst.springclosuretemplates.web.mvc.ClosureTemplateConfigurer">
 		<property name="templatesLocation"
-			value="file:src/test/resources/test-closure-templates" />
+			value="classpath:test-closure-templates" />
 	</bean>
 
 	<bean id="closureTemplateJSController"
