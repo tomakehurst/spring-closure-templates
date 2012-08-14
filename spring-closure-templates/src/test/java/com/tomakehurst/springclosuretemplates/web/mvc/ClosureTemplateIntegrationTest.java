@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,7 +28,7 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations={"/applicationContext-test.xml"},loader=WebContextLoader.class)
 public class ClosureTemplateIntegrationTest {
 
-	private static final String TEMPLATES_DIR = "src/test/resources/test-closure-templates";
+    private static final Resource TEMPLATES_ROOT = new ClassPathResource("/test-closure-templates");
 
 	@Autowired
 	private ClosureTemplateConfigurer config;
@@ -155,7 +157,8 @@ public class ClosureTemplateIntegrationTest {
 	}
 
 	private File getTemplateFile(String templateFileName) throws IOException {
-		File tmpTemplateDir = new File(TEMPLATES_DIR);
+        File tmpTemplateDir = TEMPLATES_ROOT.getFile();
+
 		if (!tmpTemplateDir.exists()) {
 			tmpTemplateDir.mkdirs();
 		}

@@ -64,7 +64,7 @@ public class ClosureTemplateJavascriptController {
 		
 		List<String> compiledTemplates = soyFileSet.compileToJsSrc(jsSrcOptions, null);
 		if (compiledTemplates.size() < 1) {
-			throw notFound();
+			throw notFound("No compiled templates found");
 		}
 		
 		String templateContent = compiledTemplates.get(0);
@@ -81,17 +81,17 @@ public class ClosureTemplateJavascriptController {
 		try {
 			templateFile = new File(config.getTemplatesLocation().getFile(), templateFileName + ".soy");
 		} catch (IOException ioe) {
-			throw notFound();
+			throw notFound(templateFileName);
 		}
 		
 		if (!templateFile.exists() || !templateFile.isFile()) {
-			throw notFound();
+			throw notFound(templateFileName);
 		}
 		return templateFile;
 	}
 
-	private HttpClientErrorException notFound() {
-		return new HttpClientErrorException(NOT_FOUND);
+	private HttpClientErrorException notFound(String file) {
+		return new HttpClientErrorException(NOT_FOUND, file);
 	}
 	
 	public void setConfig(ClosureTemplateConfig config) {
